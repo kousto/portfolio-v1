@@ -190,10 +190,6 @@ body.mc-you-active :is(smp-section, smp-section *, .overlay-dim) { cursor: none 
   user-select: none;
 }
 
-
-
-
-
 /* carte-galerie : les photos se superposent et fondent */
 .byq-gem--multiplayer-cursors-01__card .mc-gal {
   position: relative; width: 100%; aspect-ratio: 16/10; border-radius: 10px; overflow: hidden;
