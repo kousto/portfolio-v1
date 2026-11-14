@@ -323,7 +323,7 @@
         gal.appendChild(only);
       }
       fig.appendChild(gal);
-             } else if (cfg.video){
+                } else if (cfg.video){
       /* v10m : carte vidéo — muette, boucle, autoplay,
          ratio réel de la vidéo appliqué dès les métadonnées */
       var v = el("video", "mc-video");
@@ -342,6 +342,7 @@
       });
       v.addEventListener("canplay", function(){ v.play().catch(function(){}); });
       fig.appendChild(v);
+
 
     } else if (cfg.img){
       var im = el("img", "mc-shot");
