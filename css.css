@@ -179,6 +179,7 @@ body.mc-you-active :is(smp-section, smp-section *, .overlay-dim) { cursor: none 
    (16/10 en fallback pendant le chargement des métadonnées) */
 .byq-gem--multiplayer-cursors-01__card .mc-video {
   width: 100%;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 16/10;
   object-fit: contain;
@@ -188,6 +189,7 @@ body.mc-you-active :is(smp-section, smp-section *, .overlay-dim) { cursor: none 
   -webkit-user-drag: none;
   user-select: none;
 }
+
 
 
 
