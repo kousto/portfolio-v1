@@ -175,7 +175,7 @@ body.mc-you-active :is(smp-section, smp-section *, .overlay-dim) { cursor: none 
   color: var(--byq-bg);
 }
 
-//* v10m : carte vidéo — le cartouche suit le ratio réel de la vidéo
+/* v10m : carte vidéo — le cartouche suit le ratio réel de la vidéo
    (16/10 en fallback pendant le chargement des métadonnées) */
 .byq-gem--multiplayer-cursors-01__card .mc-video {
   width: 100%;
