@@ -1,0 +1,305 @@
+/* ============================================================
+   HERO MULTICURSEURS · Semplice native · v9k · light unique
+   ------------------------------------------------------------
+   v9k : bloc __sel restauré (fond color-mix translucide + CONTOUR
+   plein coloré — l'opacité globale de v9j noyait le contour).
+   v9j : nettoyage du passif Lottie maison ; bloc natif .mc-arrow
+   (Lottie Semplice) intégré au système de cartes (cursor, cadre).
+   v9e : contour galerie native = bordure Semplice du .is-content
+   (transparence 0), colorée en inline par le script : aucun CSS.
+   v8 : bloc __world (tokens de la couche globale sur le body).
+   v7c : overflow: hidden retiré des sections, z-index: 5 ajouté.
+   v7b : min-height: 100vh supprimé. v7a : dark supprimé.
+   v7 : styles des textes natifs supprimés (gérés dans Semplice).
+   ============================================================ */
+
+/* ---- TOKENS (light) ---- */
+smp-section.byq-gem--multiplayer-cursors-01,
+div.byq-gem--multiplayer-cursors-01 {
+  --byq-bg: #f0eeed;
+  --byq-fg: #040404;
+  --byq-card: #ffffff;
+  --byq-depth: #e2dfdc;
+  --byq-on-accent: #040404;
+}
+
+smp-section.byq-gem--multiplayer-cursors-01,
+div.byq-gem--multiplayer-cursors-01 {
+  position: relative !important;
+  z-index: 5;
+ /* v7c : overflow: hidden retiré — les cartes débordent de leur
+    section (voulu). Les couches globales sont sur le body (v8). */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* v8 : les tokens suivent la couche globale (hors section) */
+.byq-gem--multiplayer-cursors-01__world {
+  --byq-bg: #f0eeed;
+  --byq-fg: #040404;
+  --byq-card: #ffffff;
+  --byq-depth: #e2dfdc;
+  --byq-on-accent: #040404;
+}
+
+body.mc-you-active :is(smp-section, smp-section *, .overlay-dim) { cursor: none !important; }
+
+/* couches */
+.byq-gem--multiplayer-cursors-01__sel-layer,
+.byq-gem--multiplayer-cursors-01__fx,
+.byq-gem--multiplayer-cursors-01__cursors {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.byq-gem--multiplayer-cursors-01__sel-layer { z-index: 40; }
+.byq-gem--multiplayer-cursors-01__fx { z-index: 45; }
+.byq-gem--multiplayer-cursors-01__cursors { z-index: 50; }
+
+/* v9k : surlignage — fond translucide + CONTOUR plein (restauré) */
+.byq-gem--multiplayer-cursors-01__sel {
+  position: absolute; top: 0; left: 0;
+  border: 1px solid var(--c, #040404);
+  background: color-mix(in srgb, var(--c, #040404) 16%, transparent);
+  border-radius: 2px;
+}
+
+.byq-gem--multiplayer-cursors-01__emoji { position: absolute; font-size: 1.1rem; }
+
+.byq-gem--multiplayer-cursors-01__ripple {
+  position: absolute; border: 2px solid var(--byq-fg); border-radius: 50%;
+  animation: mc-ripple .7s ease-out forwards;
+}
+@keyframes mc-ripple {
+  from { width: 8px; height: 8px; margin: -4px; opacity: .9; }
+  to { width: 90px; height: 90px; margin: -45px; opacity: 0; }
+}
+
+/* curseurs */
+.byq-gem--multiplayer-cursors-01__cursor {
+  position: absolute; top: 0; left: 0;
+  transition: transform 1.6s cubic-bezier(.6,.05,.2,1);
+  will-change: transform;
+}
+.byq-gem--multiplayer-cursors-01__cursor.mc-you { transition: none; }
+.byq-gem--multiplayer-cursors-01__cursor.is-hidden { display: none; }
+
+.byq-gem--multiplayer-cursors-01__arrow {
+  display: block; width: 20px; height: 22px; overflow: visible;
+  transform-origin: 2px 2px;
+  transition: transform .12s ease;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.22));
+}
+.byq-gem--multiplayer-cursors-01__arrow path {
+  fill: var(--c); stroke: var(--byq-bg); stroke-width: 1.25; stroke-linejoin: round;
+}
+.byq-gem--multiplayer-cursors-01__cursor.is-down .byq-gem--multiplayer-cursors-01__arrow { transform: scale(.84); }
+
+.byq-gem--multiplayer-cursors-01__tag {
+  position: absolute; top: 19px; left: 13px;
+  min-width: max-content;
+  padding: 3.5px 8px 4px;
+  border-radius: 3px 12px 12px 12px;
+  font-family: -apple-system, "Segoe UI", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500;
+  line-height: 1.25;
+    color: var(--byq-on-accent);
+  background: color-mix(in srgb, var(--c) 45%, var(--byq-bg));
+  
+  transform-origin: 0 0;
+
+  transition: padding .25s cubic-bezier(.34,1.3,.64,1), border-radius .25s ease;
+}
+.byq-gem--multiplayer-cursors-01__tag .mc-nm { font-size: 12px !important; }
+
+.byq-gem--multiplayer-cursors-01__msg {
+  display: none;
+  max-width: 15rem;
+  font-family: -apple-system, "Segoe UI", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+/* état chat : la bulle s'agrandit, le nom rétrécit, le message passe dessous */
+.byq-gem--multiplayer-cursors-01__cursor.is-chat .byq-gem--multiplayer-cursors-01__tag {
+  padding: 6px 11px 8px;
+  border-radius: 3px 16px 16px 16px;
+  animation: mc-pop-tag .32s cubic-bezier(.34,1.5,.64,1);
+}
+.byq-gem--multiplayer-cursors-01__cursor.is-chat .mc-nm {
+  display: block;
+  font-size: 10px !important;
+  opacity: .62;
+}
+.byq-gem--multiplayer-cursors-01__cursor.is-chat .byq-gem--multiplayer-cursors-01__msg { display: block; }
+@keyframes mc-pop-tag { from { transform: scale(.7); } }
+
+.byq-gem--multiplayer-cursors-01__msg input {
+  background: transparent; border: 0; outline: none;
+  color: inherit; font: inherit; width: 12rem; padding: 0;
+}
+.byq-gem--multiplayer-cursors-01__msg input::placeholder { color: color-mix(in srgb, var(--byq-bg) 45%, transparent); }
+
+/* inversion de la bulle « Vous » */
+.byq-gem--multiplayer-cursors-01__cursor.mc-you .byq-gem--multiplayer-cursors-01__tag,
+.byq-gem--multiplayer-cursors-01__cursor.mc-you .byq-gem--multiplayer-cursors-01__msg input {
+  color: var(--byq-bg);
+}
+  /* « Vous » garde sa bulle pleine (inversée), pas le pastel des profils */
+.byq-gem--multiplayer-cursors-01__cursor.mc-you .byq-gem--multiplayer-cursors-01__tag {
+  background: var(--c);
+  border-color: var(--c);
+}
+
+
+/* cartes */
+    .byq-gem--multiplayer-cursors-01__card {
+  position: absolute; z-index: 10;
+  border-radius: 10px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+  background: var(--byq-card);
+  transition: transform 2.4s cubic-bezier(.5,.05,.2,1), box-shadow .3s;
+}
+.byq-gem--multiplayer-cursors-01__card.is-held { box-shadow: 0 34px 80px rgba(0,0,0,.3); }
+.byq-gem--multiplayer-cursors-01__card img { -webkit-user-drag: none; user-select: none; }
+.byq-gem--multiplayer-cursors-01__card .mc-shot { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; border-radius: 10px; }
+.byq-gem--multiplayer-cursors-01__card .mc-ph 
+{ width: 100%; aspect-ratio: 16/10; border-radius: 10px; background: linear-gradient(135deg, var(--byq-depth), var(--byq-bg)); }
+.byq-gem--multiplayer-cursors-01__card figcaption {
+  position: absolute; left: 10px; bottom: 10px;
+  padding: 4px 10px; border-radius: 6px;
+  background: var(--byq-fg);
+  font: .6875rem/1.4 "SF Mono", Menlo, monospace;
+  color: var(--byq-bg);
+}
+
+//* v10m : carte vidéo — le cartouche suit le ratio réel de la vidéo
+   (16/10 en fallback pendant le chargement des métadonnées) */
+.byq-gem--multiplayer-cursors-01__card .mc-video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+  background: var(--byq-depth);
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+
+/* carte-galerie : les photos se superposent et fondent */
+.byq-gem--multiplayer-cursors-01__card .mc-gal {
+  position: relative; width: 100%; aspect-ratio: 16/10; border-radius: 10px; overflow: hidden;
+}
+.byq-gem--multiplayer-cursors-01__card .mc-gal .mc-shot {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+}
+
+/* v9j : le bloc natif .mc-arrow (Lottie Semplice) dans le système de cartes.
+   Centrage de l'animation + rendu en gris. */
+.mc-arrow {
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mc-arrow.is-held {
+  cursor: grabbing;
+}
+.mc-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+/* la flèche Lottie en gris (gagne sur le fill noir du JSON) */
+.mc-arrow svg path,
+.mc-arrow svg g {
+  fill: #9a9a9a;
+}
+.mc-arrow .byq-gem--multiplayer-cursors-01__frame {
+  z-index: 5;
+}
+
+/* cadre de sélection dessiné par celui qui tient la carte */
+.byq-gem--multiplayer-cursors-01__frame {
+  position: absolute; inset: -1px;
+  border: 1.5px solid var(--c);
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.byq-gem--multiplayer-cursors-01__card.is-selected .byq-gem--multiplayer-cursors-01__frame { opacity: 1; }
+.mc-arrow.is-selected .byq-gem--multiplayer-cursors-01__frame { opacity: 1; }
+.byq-gem--multiplayer-cursors-01__frame i {
+  position: absolute;
+  width: 8px; height: 8px;
+  border: 1.5px solid var(--c);
+  border-radius: 1.5px;
+  background: var(--byq-fg);
+}
+.byq-gem--multiplayer-cursors-01__frame i:nth-child(1) { top: -5px; left: -5px; }
+.byq-gem--multiplayer-cursors-01__frame i:nth-child(2) { top: -5px; right: -5px; }
+.byq-gem--multiplayer-cursors-01__frame i:nth-child(3) { bottom: -5px; left: -5px; }
+.byq-gem--multiplayer-cursors-01__frame i:nth-child(4) { bottom: -5px; right: -5px; }
+.byq-gem--multiplayer-cursors-01__frame b {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--byq-on-accent);
+  background: var(--c);
+}
+/* étiquette du cadre tenu par « Vous », texte inversé */
+.byq-gem--multiplayer-cursors-01__card.held-by-you .byq-gem--multiplayer-cursors-01__frame b,
+.mc-arrow.held-by-you .byq-gem--multiplayer-cursors-01__frame b { color: var(--byq-bg); }
+
+/* note post-it */
+.byq-gem--multiplayer-cursors-01__note {
+  position: absolute;
+  padding: 1rem 1.1rem 1.35rem;
+  border-radius: 3px;
+  color: #040404; background: #f0d992;
+  font: 1rem/1.35 Georgia, serif;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+.byq-gem--multiplayer-cursors-01__note p { margin: 0; }
+
+  /* la note s'attrape et se soulève comme une carte */
+.byq-gem--multiplayer-cursors-01__note {
+  cursor: grab;
+  transition: transform .4s ease, box-shadow .3s;
+}
+.byq-gem--multiplayer-cursors-01__note.is-held {
+  cursor: grabbing;
+  box-shadow: 0 34px 80px rgba(0,0,0,.3);
+}
+/* le caret clignotant de frappe sur la note */
+.byq-gem--multiplayer-cursors-01__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  border-radius: 1px;
+   background: var(--c, #040404);
+  animation: mc-caret 1.05s steps(1) infinite;
+}
+@keyframes mc-caret { 50% { opacity: 0; } }
+
+
+@media (max-width: 900px) {
+  .byq-gem--multiplayer-cursors-01__card,
+  .byq-gem--multiplayer-cursors-01__note { display: none; }
+}
+
