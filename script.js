@@ -1,4 +1,3 @@
-<script>
 (function(){
   "use strict";
 
@@ -877,4 +876,3 @@
   }, 500));
 
 })();
-</script>
