@@ -65,7 +65,7 @@
   var CONFIG = {
   
   cards: [
-      { video: "https://video.gumlet.io/6743d419df514a0b8ae88a93/6af85a0a46afb54468aa4d8e/download.mp4", caption: "Responsive motion", top: "30%", left: "20%", width: "min(10vw, 30rem)", rot: 2 },
+      { video: "https://video.gumlet.io/6743d419df514a0b8ae88a93/6af85a0a46afb54468aa4d8e/download.mp4", caption: "Responsive motion", top: "30%", left: "20%", width: "min(20vw, 30rem)", rot: 2 },
 	 { video: "https://video.gumlet.io/6743d419df514a0b8ae88a93/6af86b5646afb54468aa6903/download.mp4", caption: "A/B testing", top: "30%", left: "70%", width: "min(10vw, 24rem)", rot: -3 },
 	{ video: "https://video.gumlet.io/6743d419df514a0b8ae88a93/6af87aa4ee8085089ab32211/download.mp4", caption: "Vibe coding", top: "70%", left: "80%", width: "min(10vw, 24rem)", rot: -6 },
     ],
